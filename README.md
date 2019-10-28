@@ -1,1 +1,1 @@
-# catatan-kegiatan
+This repository contains the example of Catatan Kegiatan app.
