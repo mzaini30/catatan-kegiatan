@@ -23,7 +23,7 @@
 	        <span class="icon-bar"></span>
 	        <span class="icon-bar"></span>
 	      </button>
-	      <a class="navbar-brand judul-aplikasi" href="index.html">Catatan Kegiatan</a>
+	      <a class="navbar-brand judul-aplikasi" href="#!">Catatan Kegiatan</a>
 	    </div>
 
 	    <!-- Collect the nav links, forms, and other content for toggling -->
@@ -41,5 +41,12 @@
 	<script type="text/javascript" src="vendor/jquery/jquery-3.4.1.min.js"></script>
 	<script type="text/javascript" src="vendor/bootstrap/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="vendor/dexie/dexie.js"></script>
+	<script>
+		$('.judul-aplikasi').click(function(){
+			$('html, body').animate({
+				scrollTop: 0
+			}, 600)
+		})
+	</script>
 </body>
 </html>
