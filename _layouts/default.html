@@ -30,6 +30,7 @@
 	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	      <ul class="nav navbar-nav">
 	        <li><a href="index.html">Tambah Data</a></li>
+	        <li><a href="lihat.html" class="tombol-lihat-data">Lihat Data</a></li>
 	        <li><a href="https://play.google.com/store/apps/dev?id=5401138465689796048">Aplikasi Lainnya</a></li>
 	        <li><a href="https://play.google.com/store/apps/details?id=com.mzaini30.catatankegiatan">Review Aplikasi</a></li>
 	      </ul>
@@ -71,6 +72,10 @@
 				hapus_semua()
 				swal('Data berhasil disimpan.')
 			})
+		})
+		$('.isi-data').html('')
+		kegiatan.data.each(function(x){
+			$('.isi-data').prepend('<div class="panel panel-default"><div class="panel-body"><div class="clearfix"><a href="#!" class="close">&times;</a>Nama : ' + x.nama + ' <br>Kegiatan : ' + x.kegiatan + ' <br>Tanggal : ' + x.tanggal + ' <br>Berangkat : ' + x.berangkat + ' <br>Pulang : ' + x.pulang + ' <br>Durasi : ' + x.durasi + '<hr>Catatan : <div class="wrap">' + x.catatan + '</div></div></div><div class="panel-footer"><a href="#!" class="btn btn-warning">Edit</a></div></div>')
 		})
 	</script>
 </body>
