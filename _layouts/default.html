@@ -98,7 +98,6 @@
 		kegiatan.data.where({
 			id: Number(location.search.slice(1, 2))
 		}).each(function(x){
-			$('.edit-data .id').val(x.id)
 			$('.edit-data .nama').val(x.nama)
 			$('.edit-data .kegiatan').val(x.kegiatan)
 			$('.edit-data .tanggal').val(x.tanggal)
@@ -106,6 +105,23 @@
 			$('.edit-data .pulang').val(x.pulang)
 			$('.edit-data .durasi').val(x.durasi)
 			$('.edit-data .catatan').val(x.catatan)
+		}).then(function(){
+			$('.edit-data').on('submit', function(x){
+				x.preventDefault()
+				kegiatan.data.where({
+					id: Number(location.search.slice(1, 2))
+				}).modify({
+					nama: $('.edit-data .nama').val(),
+					kegiatan: $('.edit-data .kegiatan').val(),
+					tanggal: $('.edit-data .tanggal').val(),
+					berangkat: $('.edit-data .berangkat').val(),
+					pulang: $('.edit-data .pulang').val(),
+					durasi: $('.edit-data .durasi').val(),
+					catatan: $('.edit-data .catatan').val()
+				}).then(function(){
+					swal('Data telah diupdate.')
+				})
+			})
 		})
 	</script>
 </body>
