@@ -10,6 +10,11 @@
 			padding-top: 70px;
 			min-height: 400px;
 		}
+
+		.wrap {
+			white-space: pre-wrap;
+			word-wrap: break-word;
+		}
 	</style>
 </head>
 <body>
@@ -73,10 +78,23 @@
 				swal('Data berhasil disimpan.')
 			})
 		})
-		$('.isi-data').html('')
-		kegiatan.data.each(function(x){
-			$('.isi-data').prepend('<div class="panel panel-default"><div class="panel-body"><div class="clearfix"><a href="#!" class="close">&times;</a>Nama : ' + x.nama + ' <br>Kegiatan : ' + x.kegiatan + ' <br>Tanggal : ' + x.tanggal + ' <br>Berangkat : ' + x.berangkat + ' <br>Pulang : ' + x.pulang + ' <br>Durasi : ' + x.durasi + '<hr>Catatan : <div class="wrap">' + x.catatan + '</div></div></div><div class="panel-footer"><a href="#!" class="btn btn-warning">Edit</a></div></div>')
-		})
+		tampil_data = function(){
+			$('.isi-data').html('')
+			kegiatan.data.each(function(x){
+				$('.isi-data').prepend('<div class="panel panel-default"><div class="panel-body"><div class="clearfix"><a href="#!" class="close" data-hapus="' + x.id + '">&times;</a>Nama : ' + x.nama + ' <br>Kegiatan : ' + x.kegiatan + ' <br>Tanggal : ' + x.tanggal + ' <br>Berangkat : ' + x.berangkat + ' <br>Pulang : ' + x.pulang + ' <br>Durasi : ' + x.durasi + '<hr>Catatan : <div class="wrap">' + x.catatan + '</div></div></div><div class="panel-footer"><a href="#!" class="btn btn-warning">Edit</a></div></div>')
+			}).then(function(){
+				$('[data-hapus]').each(function(){
+					$(this).click(function(){
+						kegiatan.data.where({
+							id: Number($(this).attr('data-hapus'))
+						}).delete().then(function(){
+							tampil_data()
+						})
+					})
+				})
+			})
+		}
+		tampil_data()
 	</script>
 </body>
 </html>
