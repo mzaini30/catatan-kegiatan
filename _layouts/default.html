@@ -44,19 +44,29 @@
 	<script type="text/javascript" src="vendor/bootstrap/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="vendor/dexie/dexie.js"></script>
 	<script>
+		kegiatan = new Dexie('database kegiatan')
+		kegiatan.version(1).stores({
+			data: '++id, nama, kegiatan, tanggal, berangkat, pulang, durasi, catatan'
+		})
+
 		$('.judul-aplikasi').click(function(){
 			$('html, body').animate({
 				scrollTop: 0
 			}, 600)
 		})
-		$('.form').on('submit', function(x){
+		$('.tambah-data').on('submit', function(x){
 			x.preventDefault()
-			swal('Data berhasil disimpan')
-		})
-
-		kegiatan = new Dexie('database kegiatan')
-		kegiatan.version(1).stores({
-			data: '++id, '
+			kegiatan.data.add({
+				nama: $('.nama').val(),
+				kegiatan: $('.kegiatan').val(),
+				tanggal: $('.tanggal').val(),
+				berangkat: $('.berangkat').val(),
+				pulang: $('.pulang').val(),
+				durasi: $('.durasi').val(),
+				catatan: $('.catatan').val()
+			}).then(function(){
+				swal('Data berhasil disimpan.')
+			})
 		})
 	</script>
 </body>
