@@ -53,6 +53,11 @@
 			x.preventDefault()
 			swal('Data berhasil disimpan')
 		})
+
+		kegiatan = new Dexie('database kegiatan')
+		kegiatan.version(1).stores({
+			data: '++id, '
+		})
 	</script>
 </body>
 </html>
