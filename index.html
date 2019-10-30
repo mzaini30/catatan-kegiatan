@@ -10,7 +10,18 @@ layout: default
 	</div>
 	<div class="form-group">
 		<label for="">Kegiatan</label>
-		<input type="text" class="form-control" required="">
+		<input type="text" class="form-control" required="" list="kegiatan">
+		<datalist id="kegiatan">
+			<option value="Rapim"></option>
+			<option value="Rakorpim"></option>
+			<option value="Rakorkap"></option>
+			<option value="Rakordu"></option>
+			<option value="Rakortas"></option>
+			<option value="Rastaff"></option>
+			<option value="Instruktur Tar"></option>
+			<option value="Instruktur Dak"></option>
+			<option value="Tugas"></option>
+		</datalist>
 	</div>
 	<div class="form-group">
 		<label for="">Tanggal</label>
@@ -26,7 +37,7 @@ layout: default
 	</div>
 	<div class="form-group">
 		<label for="">Durasi</label>
-		<input type="time" class="form-control" required="">
+		<input type="tel" class="form-control" required="">
 	</div>
 	<div class="form-group">
 		<label for="">Catatan</label>
