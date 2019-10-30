@@ -54,6 +54,9 @@
 				scrollTop: 0
 			}, 600)
 		})
+		hapus_semua = function(){
+			$('.form-control').val('')
+		}
 		$('.tambah-data').on('submit', function(x){
 			x.preventDefault()
 			kegiatan.data.add({
@@ -65,6 +68,7 @@
 				durasi: $('.durasi').val(),
 				catatan: $('.catatan').val()
 			}).then(function(){
+				hapus_semua()
 				swal('Data berhasil disimpan.')
 			})
 		})
