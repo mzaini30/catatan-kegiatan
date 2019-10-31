@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Catatan Kegiatan</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+	<style type="text/css">
+		body {
+			padding-top: 70px;
+			min-height: 400px;
+		}
+
+		.wrap {
+			white-space: pre-wrap;
+			word-wrap: break-word;
+		}
+	</style>
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top">
+	  <div class="container-fluid">
+	    <!-- Brand and toggle get grouped for better mobile display -->
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	      <a class="navbar-brand judul-aplikasi" href="#!">Catatan Kegiatan</a>
+	    </div>
+
+	    <!-- Collect the nav links, forms, and other content for toggling -->
+	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	      <ul class="nav navbar-nav">
+	        <li><a href="index.html">Tambah Data</a></li>
+	        <li><a href="lihat.html" class="tombol-lihat-data">Lihat Data</a></li>
+	        <li><a href="#!" class="tombol-laporan">Laporan</a></li>
+	        <li><a href="https://play.google.com/store/apps/dev?id=5401138465689796048">Aplikasi Lainnya</a></li>
+	      </ul>
+	    </div><!-- /.navbar-collapse -->
+	  </div><!-- /.container-fluid -->
+	</nav>
+	<div class="container">
+		<h1>Edit Data</h1>
+<form action="" class="form edit-data">
+	<div class="form-group">
+		<label for="">Nama</label>
+		<input type="text" class="form-control nama" required="">
+	</div>
+	<div class="form-group">
+		<label for="">Kegiatan</label>
+		<input type="text" class="form-control kegiatan" required="" list="kegiatan">
+		<datalist id="kegiatan">
+			<option value="Rapim"></option>
+			<option value="Rakorpim"></option>
+			<option value="Rakorkap"></option>
+			<option value="Rakordu"></option>
+			<option value="Rakortas"></option>
+			<option value="Rastaff"></option>
+			<option value="Instruktur Tar"></option>
+			<option value="Instruktur Dak"></option>
+			<option value="Tugas"></option>
+		</datalist>
+	</div>
+	<div class="form-group">
+		<label for="">Tanggal</label>
+		<input type="date" class="form-control tanggal" required="">
+	</div>
+	<div class="form-group">
+		<label for="">Berangkat</label>
+		<input type="time" class="form-control berangkat" required="">
+	</div>
+	<div class="form-group">
+		<label for="">Pulang</label>
+		<input type="time" class="form-control pulang" required="">
+	</div>
+	<div class="form-group">
+		<label for="">Durasi</label>
+		<div class="input-group">
+			<input type="tel" class="form-control durasi" required="">
+			<div class="input-group-addon">menit</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="">Catatan</label>
+		<textarea name="" id="" cols="30" rows="10" class="form-control catatan" required=""></textarea>
+	</div>
+	<div class="form-group">
+		<input type="submit" value="Simpan" class="btn btn-success">
+	</div>
+</form>
+	</div>
+	<script type="text/javascript" src="vendor/jquery/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="vendor/swal/sweetalert.min.js"></script>
+	<script type="text/javascript" src="vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="vendor/dexie/dexie.js"></script>
+	<script>
+		kegiatan = new Dexie('database kegiatan')
+		kegiatan.version(1).stores({
+			data: '++id, nama, kegiatan, tanggal, berangkat, pulang, durasi, catatan'
+		})
+
+		$('.judul-aplikasi').click(function(){
+			$('html, body').animate({
+				scrollTop: 0
+			}, 600)
+		})
+		hapus_semua = function(){
+			$('.form-control').val('')
+		}
+		$('.tambah-data').on('submit', function(x){
+			x.preventDefault()
+			kegiatan.data.add({
+				nama: $('.nama').val(),
+				kegiatan: $('.kegiatan').val(),
+				tanggal: $('.tanggal').val(),
+				berangkat: $('.berangkat').val(),
+				pulang: $('.pulang').val(),
+				durasi: $('.durasi').val(),
+				catatan: $('.catatan').val()
+			}).then(function(){
+				hapus_semua()
+				swal('Data berhasil disimpan.')
+			})
+		})
+		tampil_data = function(){
+			$('.isi-data').html('')
+			kegiatan.data.each(function(x){
+				$('.isi-data').prepend('<div class="panel panel-default"><div class="panel-body"><div class="clearfix"><a href="#!" class="close" data-hapus="' + x.id + '">&times;</a>Nama : ' + x.nama + ' <br>Kegiatan : ' + x.kegiatan + ' <br>Tanggal : ' + x.tanggal + ' <br>Berangkat : ' + x.berangkat + ' <br>Pulang : ' + x.pulang + ' <br>Durasi : ' + x.durasi + '<hr>Catatan : <div class="wrap">' + x.catatan + '</div></div></div><div class="panel-footer"><a href="edit.html?' + x.id + '" class="btn btn-warning">Edit</a></div></div>')
+			}).then(function(){
+				$('[data-hapus]').each(function(){
+					$(this).click(function(){
+						kegiatan.data.where({
+							id: Number($(this).attr('data-hapus'))
+						}).delete().then(function(){
+							tampil_data()
+						})
+					})
+				})
+			})
+		}
+		tampil_data()
+		kegiatan.data.where({
+			id: Number(location.search.slice(1, 2))
+		}).each(function(x){
+			$('.edit-data .nama').val(x.nama)
+			$('.edit-data .kegiatan').val(x.kegiatan)
+			$('.edit-data .tanggal').val(x.tanggal)
+			$('.edit-data .berangkat').val(x.berangkat)
+			$('.edit-data .pulang').val(x.pulang)
+			$('.edit-data .durasi').val(x.durasi)
+			$('.edit-data .catatan').val(x.catatan)
+		}).then(function(){
+			$('.edit-data').on('submit', function(x){
+				x.preventDefault()
+				kegiatan.data.where({
+					id: Number(location.search.slice(1, 2))
+				}).modify({
+					nama: $('.edit-data .nama').val(),
+					kegiatan: $('.edit-data .kegiatan').val(),
+					tanggal: $('.edit-data .tanggal').val(),
+					berangkat: $('.edit-data .berangkat').val(),
+					pulang: $('.edit-data .pulang').val(),
+					durasi: $('.edit-data .durasi').val(),
+					catatan: $('.edit-data .catatan').val()
+				}).then(function(){
+					swal('Data telah diupdate.')
+				})
+			})
+		})
+		$('.tombol-laporan').click(function(x){
+			x.preventDefault()
+			isi = 'https://api.whatsapp.com/send?text='
+			kegiatan.data.each(function(x){
+				isi += '*Nama*%20%3A%20' + x.nama + '%0A*Kegiatan*%20%3A%20' + x.kegiatan + '%0A*Tanggal*%20%3A%20' + x.tanggal + '%0A*Berangkat*%20%3A%20' + x.berangkat + '%0A*Pulang*%20%3A%20' + x.pulang + '%0A*Durasi*%20%3A%20' + x.durasi + '%0A*Catatan*%20%3A%0A' + x.catatan.replace('\n', '%0A') + '%0A%0A-------------------%0A%0A'
+			}).then(function(){
+				location.href = isi
+			})
+		})
+	</script>
+</body>
+</html>
