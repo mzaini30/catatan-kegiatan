@@ -209,7 +209,7 @@
 		tampil_data = function(){
 			$('.isi-data').html('')
 			kegiatan.data.each(function(x){
-				$('.isi-data').prepend('<div class="panel panel-default"><div class="panel-body"><div class="clearfix"><a href="#!" class="close" data-hapus="' + x.id + '">&times;</a>Nama : ' + x.nama + ' <br>Kegiatan : ' + x.kegiatan + ' <br>Tanggal : ' + x.tanggal + ' <br>Berangkat : ' + x.berangkat + ' <br>Pulang : ' + x.pulang + ' <br>Durasi : ' + x.durasi + '<hr>Catatan : <div class="wrap">' + x.catatan + '</div></div></div><div class="panel-footer"><a href="edit.html?' + x.id + '" class="btn btn-warning">Edit</a></div></div>')
+				$('.isi-data').prepend('<div class="panel panel-default"><div class="panel-body"><div class="clearfix"><a href="#!" class="close" data-hapus="' + x.id + '">&times;</a>Nama : ' + x.nama + ' <br>Kegiatan : ' + x.kegiatan + ' <br>Tanggal : ' + x.tanggal + ' <br>Berangkat : ' + x.berangkat + ' <br>Pulang : ' + x.pulang + ' <br>Durasi : ' + x.durasi + ' menit<hr>Catatan : <div class="wrap">' + x.catatan + '</div></div></div><div class="panel-footer"><a href="edit.html?' + x.id + '" class="btn btn-warning">Edit</a></div></div>')
 			}).then(function(){
 				$('[data-hapus]').each(function(){
 					$(this).click(function(){
@@ -255,7 +255,7 @@
 			x.preventDefault()
 			isi = 'https://api.whatsapp.com/send?text='
 			kegiatan.data.each(function(x){
-				isi += '*Nama*%20%3A%20' + x.nama + '%0A*Kegiatan*%20%3A%20' + x.kegiatan + '%0A*Tanggal*%20%3A%20' + x.tanggal + '%0A*Berangkat*%20%3A%20' + x.berangkat + '%0A*Pulang*%20%3A%20' + x.pulang + '%0A*Durasi*%20%3A%20' + x.durasi + '%0A*Catatan*%20%3A%0A' + x.catatan.replace('\n', '%0A') + '%0A%0A-------------------%0A%0A'
+				isi += '*Nama*%20%3A%20' + x.nama + '%0A*Kegiatan*%20%3A%20' + x.kegiatan + '%0A*Tanggal*%20%3A%20' + x.tanggal + '%0A*Berangkat*%20%3A%20' + x.berangkat + '%0A*Pulang*%20%3A%20' + x.pulang + '%0A*Durasi*%20%3A%20' + x.durasi + '%20menit%0A*Catatan*%20%3A%0A' + x.catatan.replace('\n', '%0A') + '%0A%0A-------------------%0A%0A'
 			}).then(function(){
 				location.href = isi
 			})
