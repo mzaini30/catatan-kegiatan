@@ -124,7 +124,13 @@
 			})
 		})
 		$('.tombol-laporan').click(function(x){
-			swal('tes')
+			x.preventDefault()
+			isi = 'https://api.whatsapp.com/send?text='
+			kegiatan.data.each(function(x){
+				isi += '*Nama*%20%3A%20' + x.nama + '%0A*Kegiatan*%20%3A%20' + x.kegiatan + '%0A*Tanggal*%20%3A%20' + x.tanggal + '%0A*Berangkat*%20%3A%20' + x.berangkat + '%0A*Pulang*%20%3A%20' + x.pulang + '%0A*Durasi*%20%3A%20' + x.durasi + '%0A*Catatan*%20%3A%0A' + x.catatan.replace('\n', '%0A') + '%0A%0A-------------------%0A%0A'
+			}).then(function(){
+				location.href = isi
+			})
 		})
 	</script>
 </body>
